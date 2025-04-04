@@ -60,7 +60,7 @@ enable = "pypy"
        # "cpython-freethreading"
 skip = [
     "cp36-*",
-    "pp36-",
+    "pp36-*",
     "cp37-*",
     "pp37-*",
     "pp38-*",
