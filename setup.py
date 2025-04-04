@@ -105,7 +105,9 @@ def latest_libxslt_release():
 
 
 def latest_xmlsec_release():
-    return latest_release_from_html('https://www.aleksey.com/xmlsec/download/', re.compile('xmlsec1-(?P<version>.*).tar.gz'))
+    # Downloading from https://www.aleksey.com/xmlsec/download/ seems to be blocked when running
+    # in GitHub Actions, returning a 403 Forbidden response. Fetch from GitHub instead.
+    return latest_release_from_github_api('lsh123/xmlsec')
 
 
 class CrossCompileInfo:
@@ -515,7 +517,7 @@ class build_ext(build_ext_orig):
         self.info('Building xmlsec1')
         ldflags.append('-lpthread')
         env['LDFLAGS'] = ' '.join(ldflags)
-        xmlsec1_dir = next(self.build_libs_dir.glob('xmlsec1-*'))
+        xmlsec1_dir = next(self.build_libs_dir.glob('*xmlsec*'))
         subprocess.check_output(
             [
                 './configure',
