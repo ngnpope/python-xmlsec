@@ -6,8 +6,6 @@ python-xmlsec
 .. image:: https://results.pre-commit.ci/badge/github/xmlsec/python-xmlsec/master.svg
    :target: https://results.pre-commit.ci/latest/github/xmlsec/python-xmlsec/master
    :alt: pre-commit.ci status
-.. image:: https://img.shields.io/appveyor/ci/hoefling/xmlsec/master.svg?logo=appveyor&logoColor=white&label=AppVeyor
-   :target: https://ci.appveyor.com/project/hoefling/xmlsec
 .. image:: https://github.com/mehcode/python-xmlsec/actions/workflows/manylinux.yml/badge.svg
    :target: https://github.com/mehcode/python-xmlsec/actions/workflows/manylinux.yml
 .. image:: https://github.com/mehcode/python-xmlsec/actions/workflows/macosx.yml/badge.svg

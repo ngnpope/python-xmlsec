@@ -2,7 +2,6 @@
 .*
 !.editorconfig
 !.travis*
-!.appveyor*
 !.git*
 !.readthedocs.yaml
 !.pre-commit-config.yaml
