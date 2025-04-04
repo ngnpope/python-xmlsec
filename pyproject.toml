@@ -48,19 +48,32 @@ requires = ['setuptools>=42', 'wheel', 'setuptools_scm[toml]>=3.4', "pkgconfig>=
 
 [tool.cibuildwheel]
 build-verbosity = 1
-build-frontend = "build"
+enable = "pypy"
+       # "cpython-prerelease"
+       # "cpython-freethreading"
 skip = [
-    "pp*",
+    "cp36-*",
+    "pp36-",
+    "cp37-*",
+    "pp37-*",
+    "pp38-*",
+    "pp*-manylinux_i686",
     "*-musllinux_i686",
-    # LXML doesn't publish wheels for these platforms, which makes it
-    # difficult for us to build wheels, so we exclude them.
-    "cp36-manylinux_aarch64",
-    "cp37-manylinux_aarch64",
-    "cp36-musllinux_aarch64",
-    "cp37-musllinux_aarch64",
-    "cp36-macosx*",
-    "cp37-macosx*",
-    "cp38-macosx*",
+    # Py3.8 wheel for macos is not universal: https://bugs.launchpad.net/lxml/+bug/2055404
+    "cp38-macosx_universal2",
+    # Reduce job load and HTTP hit rate on library servers.
+    "cp38-manylinux_aarch64",
+    "cp38-musllinux_aarch64",
+    "cp38-manylinux_armv7l",
+    "cp38-musllinux_armv7l",
+    "cp38-manylinux_ppc64le",
+    "cp39-manylinux_ppc64le",
+    "cp38-musllinux_ppc64le",
+    "cp39-musllinux_ppc64le",
+    "cp38-manylinux_s390x",
+    "cp39-manylinux_s390x",
+    "cp38-musllinux_s390x",
+    "cp39-musllinux_s390x",
 ]
 test-command = "pytest -v --color=yes {package}/tests"
 before-test = "pip install -r requirements-test.txt"
@@ -72,18 +85,46 @@ PYXMLSEC_LIBXML2_VERSION = "2.12.9"
 PYXMLSEC_LIBXSLT_VERSION = "1.1.42"
 
 [tool.cibuildwheel.linux]
-archs = ["x86_64", "aarch64", "i686"]
+archs = ["x86_64", "aarch64", "i686", "ppc64le", "s390x", "armv7l"]
 environment-pass = ["GH_TOKEN"]
+repair-wheel-command = "auditwheel repair --strip -w {dest_dir} {wheel}"
 
-[tool.cibuildwheel.macos]
-archs = ["x86_64", "arm64"]
-before-all = "brew install perl"
+[tool.cibuildwheel.linux.environment]
+CFLAGS = "-O3 -g1 -pipe -fPIC -flto"
+AR = "gcc-ar"
+NM = "gcc-nm"
+RANLIB = "gcc-ranlib"
+LDFLAGS = "-fPIC -flto"
+PYXMLSEC_STATIC_DEPS = "true"
+PYXMLSEC_LIBXML2_VERSION = "2.12.9"
+PYXMLSEC_LIBXSLT_VERSION = "1.1.42"
+
+[[tool.cibuildwheel.overrides]]
+select = "*linux_i686"
+inherit.environment = "append"
+environment.CFLAGS = "-O3 -g1 -pipe -fPIC -flto -march=core2 -mtune=generic"
+before-all = "yum install -y perl-core"
+
+[[tool.cibuildwheel.overrides]]
+select = "*linux_x86_64"
+inherit.environment = "append"
+environment.CFLAGS = "-O3 -g1 -pipe -fPIC -flto -march=core2 -mtune=generic"
+before-all = "yum install -y perl-core"
+
+[[tool.cibuildwheel.overrides]]
+select = "*aarch64"
+inherit.environment = "append"
+environment.CFLAGS = "-O3 -g1 -pipe -fPIC -flto -march=armv8-a -mtune=cortex-a72"
 
 [tool.cibuildwheel.windows]
 archs = ["AMD64", "x86"]
 
-[[tool.cibuildwheel.overrides]]
-select = "*-manylinux*"
-before-all = "yum install -y perl-core"
+[tool.cibuildwheel.macos]
+# https://cibuildwheel.readthedocs.io/en/stable/faq/#what-to-provide suggests to provide
+# x86_64 and one of universal2 or arm64 wheels.  x86_64 is still required by older pips,
+# so additional arm64 wheels would suffice.  However, since the library build uses a mixed
+# amd64/arm64 setup, we build universal2 wheels regardless.
+archs = ["x86_64", "universal2"]
+before-all = "brew install perl"
 
 [tool.setuptools_scm]
