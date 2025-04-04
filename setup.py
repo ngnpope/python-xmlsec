@@ -59,7 +59,7 @@ def latest_release_from_html(url, matcher):
             return Version('0.0')
 
     latest = max(hrefs, key=comp)
-    return '{}/{}'.format(url, latest)
+    return '{}/{}'.format(url.rstrip("/"), latest)
 
 
 def latest_release_from_gnome_org_cache(url, lib_name):
