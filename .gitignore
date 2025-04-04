@@ -1,7 +1,6 @@
 # Dot files
 .*
 !.editorconfig
-!.travis*
 !.git*
 !.readthedocs.yaml
 !.pre-commit-config.yaml
