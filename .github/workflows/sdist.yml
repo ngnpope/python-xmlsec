@@ -16,7 +16,7 @@ jobs:
           python-version: ${{ matrix.python }}
       - name: Install build dependencies
         run: |
-          pip install --upgrade build packaging pip setuptools wheel
+          pip install --upgrade build[virtualenv] packaging pip setuptools wheel
       - name: Package source dist
         run: |
           python setup.py sdist

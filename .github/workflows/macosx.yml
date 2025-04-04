@@ -17,7 +17,7 @@ jobs:
           python-version: ${{ matrix.python }}
       - name: Install build dependencies
         run: |
-          pip install --upgrade build packaging pip setuptools wheel
+          pip install --upgrade build[virtualenv] packaging pip setuptools wheel
           brew install libxml2 libxmlsec1 pkg-config
       - name: Build macosx_x86_64 wheel
         env:
