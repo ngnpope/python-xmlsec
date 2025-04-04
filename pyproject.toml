@@ -88,3 +88,5 @@ archs = ["AMD64", "x86"]
 [[tool.cibuildwheel.overrides]]
 select = "*-manylinux*"
 before-all = "yum install -y perl-core"
+
+[tool.setuptools_scm]
