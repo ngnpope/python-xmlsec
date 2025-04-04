@@ -68,15 +68,12 @@ test-skip = "*-macosx_arm64"
 
 [tool.cibuildwheel.environment]
 PYXMLSEC_STATIC_DEPS = "true"
+PYXMLSEC_LIBXML2_VERSION = "2.12.9"
+PYXMLSEC_LIBXSLT_VERSION = "1.1.42"
 
 [tool.cibuildwheel.linux]
 archs = ["x86_64", "aarch64", "i686"]
-environment-pass = [
-    "PYXMLSEC_LIBXML2_VERSION",
-    "PYXMLSEC_LIBXSLT_VERSION",
-    "PYXMLSEC_STATIC_DEPS",
-    "GH_TOKEN"
-]
+environment-pass = ["GH_TOKEN"]
 
 [tool.cibuildwheel.macos]
 archs = ["x86_64", "arm64"]
