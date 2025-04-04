@@ -175,7 +175,7 @@ class build_ext(build_ext_orig):
         ext.define_macros.extend(
             [('MODULE_NAME', self.distribution.metadata.name), ('MODULE_VERSION', self.distribution.metadata.version)]
         )
-        # escape the XMLSEC_CRYPTO macro value, see mehcode/python-xmlsec#141
+        # escape the XMLSEC_CRYPTO macro value, see https://github.com/xmlsec/python-xmlsec/issues/141
         for key, value in ext.define_macros:
             if key == 'XMLSEC_CRYPTO' and not (value.startswith('"') and value.endswith('"')):
                 ext.define_macros.remove((key, value))
@@ -609,11 +609,11 @@ setup(
     author_email='support@mehcode.com',
     maintainer='Oleg Hoefling',
     maintainer_email='oleg.hoefling@gmail.com',
-    url='https://github.com/mehcode/python-xmlsec',
+    url='https://github.com/xmlsec/python-xmlsec',
     project_urls={
         'Documentation': 'https://xmlsec.readthedocs.io',
-        'Source': 'https://github.com/mehcode/python-xmlsec',
-        'Changelog': 'https://github.com/mehcode/python-xmlsec/releases',
+        'Source': 'https://github.com/xmlsec/python-xmlsec',
+        'Changelog': 'https://github.com/xmlsec/python-xmlsec/releases',
     },
     license='MIT',
     keywords=['xmlsec'],

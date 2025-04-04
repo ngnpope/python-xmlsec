@@ -6,10 +6,10 @@ python-xmlsec
 .. image:: https://results.pre-commit.ci/badge/github/xmlsec/python-xmlsec/master.svg
    :target: https://results.pre-commit.ci/latest/github/xmlsec/python-xmlsec/master
    :alt: pre-commit.ci status
-.. image:: https://github.com/mehcode/python-xmlsec/actions/workflows/macosx.yml/badge.svg
-   :target: https://github.com/mehcode/python-xmlsec/actions/workflows/macosx.yml
-.. image:: https://github.com/mehcode/python-xmlsec/actions/workflows/linuxbrew.yml/badge.svg
-   :target: https://github.com/mehcode/python-xmlsec/actions/workflows/linuxbrew.yml
+.. image:: https://github.com/xmlsec/python-xmlsec/actions/workflows/macosx.yml/badge.svg
+   :target: https://github.com/xmlsec/python-xmlsec/actions/workflows/macosx.yml
+.. image:: https://github.com/xmlsec/python-xmlsec/actions/workflows/linuxbrew.yml/badge.svg
+   :target: https://github.com/xmlsec/python-xmlsec/actions/workflows/linuxbrew.yml
 .. image:: https://codecov.io/gh/xmlsec/python-xmlsec/branch/master/graph/badge.svg
    :target: https://codecov.io/gh/xmlsec/python-xmlsec
 .. image:: https://img.shields.io/readthedocs/xmlsec/latest?logo=read-the-docs
