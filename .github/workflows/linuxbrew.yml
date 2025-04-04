@@ -22,7 +22,7 @@ jobs:
         run: |
           python3 -m venv build_venv
           source build_venv/bin/activate
-          pip3 install --upgrade setuptools wheel build
+          pip3 install --upgrade build packaging pip setuptools wheel
           export CFLAGS="-I$(brew --prefix)/include"
           export LDFLAGS="-L$(brew --prefix)/lib"
           python3 -m build

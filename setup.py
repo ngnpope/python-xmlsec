@@ -2,6 +2,7 @@ import contextlib
 import html.parser
 import io
 import json
+import logging
 import multiprocessing
 import os
 import re
@@ -9,10 +10,9 @@ import subprocess
 import sys
 import tarfile
 import zipfile
-from distutils import log
-from distutils.errors import DistutilsError
-from distutils.version import StrictVersion as Version
+from packaging.version import Version
 from pathlib import Path
+from setuptools.errors import BaseError
 from urllib.parse import urljoin
 from urllib.request import Request, urlcleanup, urlopen, urlretrieve
 
@@ -76,11 +76,11 @@ def latest_release_from_github_api(repo):
     # if we are running in CI, pass along the GH_TOKEN, so we don't get rate limited
     token = os.environ.get("GH_TOKEN")
     if token:
-        log.info("Using GitHub token to avoid rate limiting")
+        logging.info("Using GitHub token to avoid rate limiting")
     api_releases = make_request(api_url, token, json_response=True)
     releases = [r['tarball_url'] for r in api_releases if r['prerelease'] is False and r['draft'] is False]
     if not releases:
-        raise DistutilsError('No release found for {}'.format(repo))
+        raise BaseError('No release found for {}'.format(repo))
     return releases[0]
 
 
@@ -121,7 +121,7 @@ class CrossCompileInfo:
 
 class build_ext(build_ext_orig):
     def info(self, message):
-        self.announce(message, level=log.INFO)
+        self.announce(message, level=logging.INFO)
 
     def run(self):
         ext = self.ext_map['xmlsec']
@@ -156,12 +156,12 @@ class build_ext(build_ext_orig):
             try:
                 config = pkgconfig.parse('xmlsec1')
             except EnvironmentError:
-                raise DistutilsError('Unable to invoke pkg-config.')
+                raise BaseError('Unable to invoke pkg-config.')
             except pkgconfig.PackageNotFoundError:
-                raise DistutilsError('xmlsec1 is not installed or not in path.')
+                raise BaseError('xmlsec1 is not installed or not in path.')
 
             if config is None or not config.get('libraries'):
-                raise DistutilsError('Bad or incomplete result returned from pkg-config.')
+                raise BaseError('Bad or incomplete result returned from pkg-config.')
 
             ext.define_macros.extend(config['define_macros'])
             ext.include_dirs.extend(config['include_dirs'])
@@ -396,7 +396,7 @@ class build_ext(build_ext_orig):
                 with tarfile.open(str(file)) as tar:
                     tar.extractall(path=str(self.build_libs_dir))
             except EOFError:
-                raise DistutilsError('Bad {} downloaded; remove it and try again.'.format(file.name))
+                raise BaseError('Bad {} downloaded; remove it and try again.'.format(file.name))
 
         prefix_arg = '--prefix={}'.format(self.prefix_dir)
 

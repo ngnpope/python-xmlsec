@@ -44,7 +44,14 @@ known_first_party = ['xmlsec']
 known_third_party = ['lxml', 'pytest', '_pytest', 'hypothesis']
 
 [build-system]
-requires = ['setuptools>=42', 'wheel', 'setuptools_scm[toml]>=3.4', "pkgconfig>=1.5.1", "lxml>=3.8, !=4.7.0"]
+requires = [
+    'lxml>=3.8, !=4.7.0',
+    'packaging',
+    'pkgconfig>=1.5.1',
+    'setuptools>=42',
+    'setuptools_scm[toml]>=3.4',
+    'wheel',
+]
 
 [tool.cibuildwheel]
 build-verbosity = 1
